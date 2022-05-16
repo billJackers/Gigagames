@@ -160,7 +160,7 @@ int main()
         while (cur != nullptr)
         {
             trans = glm::mat4(1.0f);
-            trans = glm::translate(trans, glm::vec3(cur->xPos * nodeWidth, cur->yPos * nodeHeight, 0.0f));
+            trans = glm::translate(trans, glm::vec3(cur->position.x * nodeWidth, cur->position.y * nodeHeight, 0.0f));
 
             shader.use();
             shader.setMat4("transform", trans);
@@ -191,13 +191,13 @@ void processInput(GLFWwindow* window)
 {
     if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
         glfwSetWindowShouldClose(window, true);
-    if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS && head->xPos != head->next->xPos)
+    if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS && head->position.x != head->next->position.x)
         head->direction = UP;
-    if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS && head->yPos != head->next->yPos)
+    if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS && head->position.y != head->next->position.y)
         head->direction = LEFT;
-    if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS && head->xPos != head->next->xPos)
+    if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS && head->position.x != head->next->position.x)
         head->direction = DOWN;
-    if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS && head->yPos != head->next->yPos)
+    if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS && head->position.y != head->next->position.y)
         head->direction = RIGHT;
 }
 
@@ -223,13 +223,13 @@ void update()
         while (cur != nullptr)
         {
             if (cur->direction == UP)
-                cur->yPos++;
+                cur->position.y++;
             if (cur->direction == DOWN)
-                cur->yPos--;
+                cur->position.y--;
             if (cur->direction == RIGHT)
-                cur->xPos++;
+                cur->position.x++;
             if (cur->direction == LEFT)
-                cur->xPos--;
+                cur->position.x--;
 
             if (cur->next != nullptr)
             {
@@ -253,14 +253,14 @@ void update()
             shouldAdd = false;
         }
 
-        if (head->xPos == appleX && head->yPos == appleY)
+        if (head->position.x == appleX && head->position.y == appleY)
         {
             score++;
             appleX = xDistr(gen);
             appleY = yDistr(gen);
             shouldAdd = true;
 
-            prevTail = new SnakeNode(tail->xPos, tail->yPos, nullptr, tail->direction);
+            prevTail = new SnakeNode(tail->position.x, tail->position.y, nullptr, tail->direction);
         }
 
         delete cur;
@@ -270,14 +270,14 @@ void update()
 
 bool collided()
 {
-    if (head->xPos >= NUM_COLS || head->xPos < 0) return true;
-    if (head->yPos >= NUM_ROWS || head->yPos < 0) return true;
+    if (head->position.x >= NUM_COLS || head->position.x < 0) return true;
+    if (head->position.y >= NUM_ROWS || head->position.y < 0) return true;
 
     SnakeNode* c = head->next;
 
     while (c != nullptr)
     {
-        if (head->xPos == c->xPos && head->yPos == c->yPos)
+        if (head->position.x == c->position.x && head->position.y == c->position.y)
         {
             delete c;
             return true;

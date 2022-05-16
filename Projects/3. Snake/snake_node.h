@@ -1,6 +1,8 @@
 #ifndef SNAKE_NODE_H
 #define SNAKE_NODE_H
 
+#include "coordinate.h"
+
 enum Direction
 {
     UP,
@@ -12,17 +14,22 @@ enum Direction
 class SnakeNode
 {
 public:
-    int xPos;
-    int yPos;
+    Coordinate position;
     SnakeNode* next;
     Direction direction;
     Direction prevDirection;
 
-    SnakeNode(int _xPos, int _yPos, SnakeNode* _next, Direction _direction)
-        : xPos(_xPos), yPos(_yPos), next(_next), direction(_direction)
+    SnakeNode(int xPos, int yPos, SnakeNode* _next, Direction _direction)
+        : next(_next), direction(_direction)
     {
+        position = Coordinate(xPos, yPos);
         prevDirection = direction;
     };
+
+    ~SnakeNode()
+    {
+        
+    }
 };
 
 #endif
