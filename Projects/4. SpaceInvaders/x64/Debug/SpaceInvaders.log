@@ -1,0 +1,5 @@
+﻿  main.cpp
+C:\Users\yuehe\source\repos\cpp\SpaceInvaders\sprite.h(70,1): warning C4267: 'argument': conversion from 'size_t' to 'GLsizei', possible loss of data
+C:\Users\yuehe\source\repos\cpp\SpaceInvaders\main.cpp(47,20): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\yuehe\source\repos\cpp\SpaceInvaders\main.cpp(47,14): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+  SpaceInvaders.vcxproj -> C:\Users\yuehe\source\repos\cpp\SpaceInvaders\x64\Debug\SpaceInvaders.exe

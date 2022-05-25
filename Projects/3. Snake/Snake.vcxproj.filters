@@ -32,6 +32,15 @@
     <ClInclude Include="snake_node.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="snake_game.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="coordinate.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="randomizer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="snakeVertShader.txt">

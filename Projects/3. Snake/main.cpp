@@ -28,7 +28,7 @@ float deltaTime = 0.0f;
 float lastFrame = 0.0f;
 float timeElapsed = 0.0f;
 
-float snakeSpeed = 0.05f;
+float snakeSpeed = 0.075f;
 
 bool fullScreen = false;
 
@@ -102,7 +102,7 @@ int main()
         -1.0f, -1.0f, 0.0f, // Bottom left
         -1.0f, -1.0f + nodeHeight, 0.0f // Top left
     };
-
+    
     int indices[] = {
         0, 1, 3, // first triangle
         1, 2, 3  // second triangle
