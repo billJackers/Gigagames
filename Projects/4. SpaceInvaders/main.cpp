@@ -8,8 +8,13 @@
 #include "shader.h"
 #include "texture.h"
 #include "sprite.h"
+#include "game.h"
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
+
+// Timing
+float deltaTime = 0.0f;
+float lastFrame = 0.0f;
 
 int main()
 {
@@ -20,7 +25,7 @@ int main()
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
 	// Create window
-	GLFWwindow* window = glfwCreateWindow(600, 800, "Space Invaders", NULL, NULL);
+	GLFWwindow* window = glfwCreateWindow(700, 800, "Space Invaders", NULL, NULL);
 	if (window == NULL)
 	{
 		std::cout << "Failed to create FLW window" << std::endl;
@@ -29,23 +34,14 @@ int main()
 	}
 	glfwMakeContextCurrent(window);
 
-	Shader spriteShader = Shader("spriteVertShader.txt", "spriteFragShader.txt");
-	Sprite s = Sprite(
-		{
-			// Positions          // Texture
-			-1.0f, -1.0f,  0.0f,  0.0f, 0.0f, // BL
-			 1.0f, -1.0f,  0.0f,  1.0f, 0.0f, // BR
-			 1.0f,  1.0f,  0.0f,  1.0f, 1.0f, // TR
-			-1.0f,  1.0f,  0.0f,  0.0f, 1.0f, // TL
-		},
-		{
-			 0,  1,  2,  // 1st triangle
-			 0,  2,  3,  // 2nd triangle
-		},
-		spriteShader,
-		Texture("resources/textures/gigachad.jpg"),
-		Coordinate(0.0f, 0.0f)
-		);
+	// Initialize GLAD
+	if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
+	{
+		std::cout << "Failed to intialize GLAD" << std::endl;
+		return -1;
+	}
+
+	Game spaceInvaders = Game();
 
 	// Initialize GLAD
 	if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
@@ -56,17 +52,25 @@ int main()
 
 	glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
 
-	while (!glfwWindowShouldClose(window))
+	while (!glfwWindowShouldClose(window) && !spaceInvaders.gameOver)
 	{
+		float currentFrame = static_cast<float>(glfwGetTime());
+		deltaTime = currentFrame - lastFrame;
+		lastFrame = currentFrame;
+
 		glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT);
 
-		s.render();
-		s.update();
-
+		spaceInvaders.processInput(window, deltaTime);
+		spaceInvaders.update(deltaTime);
+		spaceInvaders.render();
+		
 		glfwSwapBuffers(window);
 		glfwPollEvents();
 	}
+
+	std::cout << "GAME OVER" << std::endl;
+	std::cout << "SCORE: " << spaceInvaders.score << std::endl;
 
 	return 0;
 }

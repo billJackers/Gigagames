@@ -1,2 +1,3 @@
 C:\Users\yuehe\source\repos\SpaceInvaders\x64\Debug\SpaceInvaders.exe
 C:\Users\yuehe\source\repos\cpp\SpaceInvaders\x64\Debug\SpaceInvaders.exe
+C:\Users\yuehe\source\repos\cpp\Gigagames\Projects\4. SpaceInvaders\x64\Debug\SpaceInvaders.exe

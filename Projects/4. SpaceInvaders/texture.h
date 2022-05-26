@@ -3,6 +3,8 @@
 
 #include "stb_image.h"
 
+#include <string>
+
 #include <glad/glad.h>
 
 class Texture
@@ -27,9 +29,18 @@ public:
 
 	};
 
-	Texture(const char* _textureSource)
-		: width(0), height(0), internalFormat(GL_RGB), imageFormat(GL_RGB), Wrap_S(GL_REPEAT), Wrap_T(GL_REPEAT), Filter_Min(GL_LINEAR), Filter_Max(GL_LINEAR), textureSource(_textureSource)
+	Texture(const char* _textureSource, GLenum type)
+		: width(0), height(0), internalFormat(type), imageFormat(type), Wrap_S(GL_REPEAT), Wrap_T(GL_REPEAT), Filter_Min(GL_LINEAR), Filter_Max(GL_LINEAR), textureSource(_textureSource)
 	{
+
+		stbi_set_flip_vertically_on_load(true);
+
+		if (type == GL_RGBA)
+		{
+			glEnable(GL_BLEND);
+			glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+		}
+
 		glGenTextures(1, &this->ID);
 		glBindTexture(GL_TEXTURE_2D, ID);
 
@@ -42,7 +53,7 @@ public:
 		unsigned char* data = stbi_load(textureSource, &width, &height, &nrChannels, 0);
 		if (data)
 		{
-			glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
+			glTexImage2D(GL_TEXTURE_2D, 0, internalFormat, width, height, 0, imageFormat, GL_UNSIGNED_BYTE, data);
 			glGenerateMipmap(GL_TEXTURE_2D);
 		}
 		else
@@ -56,6 +67,7 @@ public:
 	{
 		glBindTexture(GL_TEXTURE_2D, ID);
 	}
+
 };
 
 #endif

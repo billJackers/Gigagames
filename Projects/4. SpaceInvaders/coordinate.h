@@ -4,15 +4,15 @@
 struct Coordinate
 {
 public:
-	int x;
-	int y;
+	float x;
+	float y;
 
 	Coordinate()
 	{
 
 	}
 
-	Coordinate(int _x, int _y)
+	Coordinate(float _x, float _y)
 		: x(_x), y(_y)
 	{
 	}

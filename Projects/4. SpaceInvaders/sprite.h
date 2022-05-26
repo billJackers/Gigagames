@@ -17,12 +17,15 @@
 
 class Sprite
 {
-private:
+public:
 	std::vector<float> verticesData;
 	std::vector<unsigned int> indicesData;
 	Shader shader;
 	Texture texture;
 	Coordinate position;
+
+	float width;
+	float height;
 
 	// Vertex buffer objects
 	unsigned int VBO;
@@ -30,13 +33,20 @@ private:
 	unsigned int EBO;
 
 public:
-	Sprite(std::vector<float> vertices, std::vector<unsigned int> indices, Shader _shader, Texture _texture, Coordinate startPos)
+	Sprite()
+	{
+		
+	}
+
+	Sprite(std::vector<float> vertices, std::vector<unsigned int> indices, Shader _shader, Texture _texture, Coordinate startPos, float _width, float _height)
 	{
 		verticesData = vertices;
 		indicesData = indices;
 		shader = _shader;
 		texture = _texture;
 		position = startPos;
+		width = _width;
+		height = _height;
 
 		// Bind objects
 		glGenVertexArrays(1, &VAO);
@@ -67,6 +77,10 @@ public:
 	void render()
 	{
 		bind();
+		float currentFrame = static_cast<float>(glfwGetTime());
+		glm::mat4 trans = glm::mat4(1.0f);
+		trans = glm::translate(trans, glm::vec3(position.x, position.y, 0.0f));
+		shader.setMat4("transform", trans);
 		glDrawElements(GL_TRIANGLES, indicesData.size(), GL_UNSIGNED_INT, 0);
 		unbind();
 	};
@@ -85,15 +99,18 @@ public:
 		glUseProgram(0);
 	}
 
-	void update()
+	bool collidesWith(Sprite& other)
 	{
-		// Transformations
-		this->bind();
-		glm::mat4 trans = glm::mat4(1.0f);
-		trans = glm::translate(trans, glm::vec3(position.x, position.y, 0.0f));
-		shader.setMat4("transform", trans);
-		this->unbind();
-	};
+		// collision x-axis?
+		bool collisionX = position.x + width >= other.position.x - other.width &&
+			other.position.x + other.width >= position.x - width;
+		// collision y-axis?
+		bool collisionY = position.y - height <= other.position.y + other.height &&
+			other.position.y - other.height <= position.y + height;
+		// collision only if on both axes
+		return collisionX && collisionY;
+	}
+
 };
 
 #endif
