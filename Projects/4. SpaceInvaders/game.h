@@ -19,7 +19,7 @@ const float BULLET_HEIGHT = BULLET_WIDTH * 1.2f;
 const float RELOAD_TIME = 0.75f;
 
 // Alien settings
-const float ALIEN_SPEED_MULTIPLIER = 1.2f;
+const float ALIEN_SPEED_MULTIPLIER = 1.4f;
 const float ALIEN_DROP_SPEED = 20.0f;
 const float ALIEN_WIDTH = SHIP_WIDTH * 0.75;
 const float ALIEN_HEIGHT = ALIEN_WIDTH * 0.65f;
@@ -28,6 +28,7 @@ class Game
 {
 public:
     Sprite ship;
+    Sprite background;
     std::vector<Sprite> bullets;
     float lastTimeFired;
 
@@ -47,13 +48,14 @@ public:
     Game()
         : score(0)
     {
+
         ship = Sprite(
             {
                 // Positions          // Texture
                 -1.0f, -1.0f,  0.0f,  0.0f, 0.0f, // BL
                  -1.0f + SHIP_WIDTH, -1.0f, 0.0f,  1.0f, 0.0f, // BR
-                 -1.0f + SHIP_WIDTH, -1.0f + SHIP_HEIGHT, 0.0f,  1.0f, 1.0f, // TR
-                -1.0f,  -1.0f + SHIP_HEIGHT, 0.0f,  0.0f, 1.0f, // TL
+                 -1.0f + SHIP_WIDTH, -1.0f + SHIP_HEIGHT, 0.0f,  0.95f, 1.0f, // TR
+                -1.0f,  -1.0f + SHIP_HEIGHT, 0.0f,  0.0f, 0.95f, // TL
             }, {
                  0,  1,  2,  // 1st triangle
                  0,  2,  3,  // 2nd triangle

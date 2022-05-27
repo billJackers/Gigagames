@@ -1,10 +1,10 @@
 ﻿  main.cpp
 C:\Users\yuehe\source\repos\cpp\Gigagames\Projects\4. SpaceInvaders\sprite.h(84,1): warning C4267: 'argument': conversion from 'size_t' to 'GLsizei', possible loss of data
-C:\Users\yuehe\source\repos\cpp\Gigagames\Projects\4. SpaceInvaders\game.h(72,1): warning C4305: '=': truncation from 'double' to 'float'
-C:\Users\yuehe\source\repos\cpp\Gigagames\Projects\4. SpaceInvaders\game.h(76,28): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-C:\Users\yuehe\source\repos\cpp\Gigagames\Projects\4. SpaceInvaders\game.h(120,40): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-C:\Users\yuehe\source\repos\cpp\Gigagames\Projects\4. SpaceInvaders\game.h(191,24): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-C:\Users\yuehe\source\repos\cpp\Gigagames\Projects\4. SpaceInvaders\game.h(194,21): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-C:\Users\yuehe\source\repos\cpp\Gigagames\Projects\4. SpaceInvaders\game.h(300,41): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-C:\Users\yuehe\source\repos\cpp\Gigagames\Projects\4. SpaceInvaders\game.h(301,32): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+C:\Users\yuehe\source\repos\cpp\Gigagames\Projects\4. SpaceInvaders\game.h(74,1): warning C4305: '=': truncation from 'double' to 'float'
+C:\Users\yuehe\source\repos\cpp\Gigagames\Projects\4. SpaceInvaders\game.h(78,28): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+C:\Users\yuehe\source\repos\cpp\Gigagames\Projects\4. SpaceInvaders\game.h(122,40): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+C:\Users\yuehe\source\repos\cpp\Gigagames\Projects\4. SpaceInvaders\game.h(193,24): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+C:\Users\yuehe\source\repos\cpp\Gigagames\Projects\4. SpaceInvaders\game.h(196,21): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+C:\Users\yuehe\source\repos\cpp\Gigagames\Projects\4. SpaceInvaders\game.h(302,41): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+C:\Users\yuehe\source\repos\cpp\Gigagames\Projects\4. SpaceInvaders\game.h(303,32): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
   SpaceInvaders.vcxproj -> C:\Users\yuehe\source\repos\cpp\Gigagames\Projects\4. SpaceInvaders\x64\Debug\SpaceInvaders.exe

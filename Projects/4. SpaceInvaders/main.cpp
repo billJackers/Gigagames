@@ -41,6 +41,26 @@ int main()
 		return -1;
 	}
 
+	// Background image
+	Sprite background = Sprite(
+		{
+			// Positions          // Texture
+			-1.0f, -1.0f,  0.0f,  0.0f, 0.0f, // BL
+			1.0f, -1.0f,  0.0f,  1.0f, 0.0f, // BR
+			1.0f,  1.0f,  0.0f,  1.0f, 1.0f, // TR
+			-1.0f,  1.0f,  0.0f,  0.0f, 1.0f, // TL
+		},
+		{
+			0, 1, 2, // 1st triangle
+			0, 2, 3, // 2nd triangle
+		},
+		Shader("spriteVertShader.txt", "spriteFragShader.txt"),
+		Texture("resources/textures/background.png", GL_RGB),
+		Coordinate(0.0f, 0.0f),
+		2.0f,
+		2.0f
+	);
+
 	Game spaceInvaders = Game();
 
 	// Initialize GLAD
@@ -61,6 +81,7 @@ int main()
 		glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT);
 
+		background.render();
 		spaceInvaders.processInput(window, deltaTime);
 		spaceInvaders.update(deltaTime);
 		spaceInvaders.render();
