@@ -153,6 +153,7 @@
     <Text Include="spriteVertShader.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="alien.h" />
     <ClInclude Include="coordinate.h" />
     <ClInclude Include="game.h" />
     <ClInclude Include="shader.h" />

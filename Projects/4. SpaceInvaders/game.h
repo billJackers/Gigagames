@@ -5,6 +5,7 @@
 #include <vector>
 
 #include "sprite.h"
+#include "alien.h"
 #include "texture.h"
 
 // Ship settings
@@ -32,7 +33,7 @@ public:
     std::vector<Sprite> bullets;
     float lastTimeFired;
 
-    std::vector<Sprite> aliens;
+    std::vector<Alien> aliens;
     std::vector<Sprite> alienBullets;
     float lastAlienFired;
     float nextFiringTime;
@@ -94,7 +95,7 @@ public:
             alienBullet.render();
         }
         // Render aliens
-        for (Sprite& alien : this->aliens)
+        for (Alien& alien : this->aliens)
         {
             alien.render();
         }
@@ -148,6 +149,8 @@ public:
     void fireAlienBullet()
     {
         int alien = std::rand() % aliens.size();
+        if (aliens[alien].type != SHOOTER)
+            return;
         Sprite newAlienBullet = Sprite(
             {
                 // Positions          // Texture
@@ -199,7 +202,20 @@ public:
         {
             for (int i = 0; i < numAliensX; i++)
             {
-                Sprite newAlien = Sprite(
+                const char* alienImage;
+                AlienType type;
+                if (row <= numRows / 2)
+                {
+                    alienImage = "resources/textures/alien.png";
+                    type = NORMAL;
+                }
+                else
+                {
+                    alienImage = "resources/textures/alien2.png";
+                    type = SHOOTER;
+                }
+
+                Alien newAlien = Alien(
                 {
                     // Positions          // Texture
                     -1.0f, -1.0f,  0.0f,  0.0f, 0.0f, // BL
@@ -211,10 +227,11 @@ public:
                     0,  2,  3,  // 2nd triangle
                 },
                 Shader("spriteVertShader.txt", "spriteFragShader.txt"),
-                Texture("resources/textures/alien.png", GL_RGBA),
+                Texture(alienImage, GL_RGBA),
                 Coordinate(ALIEN_WIDTH + 2 * ALIEN_WIDTH * i, 1.0f + (ALIEN_HEIGHT + 2 * ALIEN_HEIGHT * row)),
                 ALIEN_WIDTH,
-                ALIEN_HEIGHT
+                ALIEN_HEIGHT,
+                type
                 );
                 this->aliens.push_back(newAlien);
             }
@@ -300,7 +317,7 @@ public:
         {
             this->fireAlienBullet();
             lastAlienFired = glfwGetTime();
-            nextFiringTime = 1 + std::rand() % 3;
+            nextFiringTime = 1;
         }
 
         if (aliens.size() == 0)
