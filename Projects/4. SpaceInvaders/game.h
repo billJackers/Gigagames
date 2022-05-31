@@ -74,7 +74,7 @@ public:
                  0,  2,  3,  // 2nd triangle
             },
             spriteShader,
-            Texture("resources/textures/topdowngigachad_blue.png", GL_RGBA),
+            Texture("resources/textures/ship.png", GL_RGBA),
             Coordinate(0.0f, 0.0f),
             SHIP_WIDTH,
             SHIP_HEIGHT
@@ -260,26 +260,26 @@ public:
     {
         //for (int i = 0; i < 2.0f / BARRIER_WIDTH; i++)
         //{
-        Shape newBarrier = Shape(
-            {
-                // Positions          
-                0.5f,  0.5f, 0.0f,  // top right
-                0.5f, -0.5f, 0.0f,  // bottom right
-                -0.5f, -0.5f, 0.0f,  // bottom left
-                -0.5f,  0.5f, 0.0f   // top left 
-            }, {
-                0, 1, 3,   // first triangle
-                1, 2, 3    // second triangle
-            },
-            shapeShader,
-            glm::vec4(0, 255, 0, 1.0f),
-            Coordinate(0.0f, 0.2f),
-            BARRIER_WIDTH,
-            BARRIER_HEIGHT
-        );
-        //}
+        //Shape newBarrier = Shape(
+        //    {
+        //        // Positions          
+        //        0.5f,  0.5f, 0.0f,  // top right
+        //        0.5f, -0.5f, 0.0f,  // bottom right
+        //        -0.5f, -0.5f, 0.0f,  // bottom left
+        //        -0.5f,  0.5f, 0.0f   // top left 
+        //    }, {
+        //        0, 1, 3,   // first triangle
+        //        1, 2, 3    // second triangle
+        //    },
+        //    shapeShader,
+        //    glm::vec4(0, 255, 0, 1.0f),
+        //    Coordinate(0.0f, 0.2f),
+        //    BARRIER_WIDTH,
+        //    BARRIER_HEIGHT
+        //);
+        ////}
 
-        this->barriers.push_back(newBarrier);
+        //this->barriers.push_back(newBarrier);
     }
 
     void updateAliens(float dt)
