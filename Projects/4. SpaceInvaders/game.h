@@ -5,6 +5,7 @@
 #include <vector>
 
 #include "sprite.h"
+#include "shape.h"
 #include "alien.h"
 #include "texture.h"
 
@@ -25,6 +26,10 @@ const float ALIEN_DROP_SPEED = 20.0f;
 const float ALIEN_WIDTH = SHIP_WIDTH * 0.75;
 const float ALIEN_HEIGHT = ALIEN_WIDTH * 0.65f;
 
+// Barrier settings
+const float BARRIER_WIDTH = 0.5f;
+const float BARRIER_HEIGHT = 0.1f;
+
 class Game
 {
 public:
@@ -38,6 +43,11 @@ public:
     float lastAlienFired;
     float nextFiringTime;
 
+    std::vector<Shape> barriers;
+
+    Shader spriteShader;
+    Shader shapeShader;
+
     int score;
     bool gameOver;
 
@@ -49,6 +59,8 @@ public:
     Game()
         : score(0)
     {
+        shapeShader = Shader("shapeVertShader.txt", "shapeFragShader.txt");
+        spriteShader = Shader("spriteVertShader.txt", "spriteFragShader.txt");
 
         ship = Sprite(
             {
@@ -61,8 +73,8 @@ public:
                  0,  1,  2,  // 1st triangle
                  0,  2,  3,  // 2nd triangle
             },
-            Shader("spriteVertShader.txt", "spriteFragShader.txt"),
-            Texture("resources/textures/ship.png", GL_RGBA),
+            spriteShader,
+            Texture("resources/textures/topdowngigachad_blue.png", GL_RGBA),
             Coordinate(0.0f, 0.0f),
             SHIP_WIDTH,
             SHIP_HEIGHT
@@ -75,8 +87,9 @@ public:
         alienSpeed = 0.00025;
 
         lastAlienFired = 0.0f;
-        // Random number between 1 and 4
         nextFiringTime = 1 + (std::rand() % 3);
+
+        spawnBarriers();
 
         gameOver = false;
     }
@@ -98,6 +111,11 @@ public:
         for (Alien& alien : this->aliens)
         {
             alien.render();
+        }
+
+        for (Shape& barrier : this->barriers)
+        {
+            barrier.render();
         }
     }
 
@@ -137,7 +155,7 @@ public:
                  0,  1,  2,  // 1st triangle
                  0,  2,  3,  // 2nd triangle
             },
-            Shader("spriteVertShader.txt", "spriteFragShader.txt"),
+            spriteShader,
             Texture("resources/textures/projectile.png", GL_RGBA),
             Coordinate(this->ship.position.x + (SHIP_WIDTH - BULLET_WIDTH) / 2, SHIP_HEIGHT),
             BULLET_WIDTH,
@@ -162,7 +180,7 @@ public:
                  0,  1,  2,  // 1st triangle
                  0,  2,  3,  // 2nd triangle
             },
-            Shader("spriteVertShader.txt", "spriteFragShader.txt"),
+            spriteShader,
             Texture("resources/textures/alien_projectile.png", GL_RGBA),
             Coordinate(this->aliens[alien].position.x + (ALIEN_WIDTH / 2), this->aliens[alien].position.y + (ALIEN_HEIGHT / 2)),
             BULLET_WIDTH,
@@ -226,7 +244,7 @@ public:
                     0,  1,  2,  // 1st triangle
                     0,  2,  3,  // 2nd triangle
                 },
-                Shader("spriteVertShader.txt", "spriteFragShader.txt"),
+                spriteShader,
                 Texture(alienImage, GL_RGBA),
                 Coordinate(ALIEN_WIDTH + 2 * ALIEN_WIDTH * i, 1.0f + (ALIEN_HEIGHT + 2 * ALIEN_HEIGHT * row)),
                 ALIEN_WIDTH,
@@ -240,7 +258,28 @@ public:
 
     void spawnBarriers()
     {
-        // TODO       
+        //for (int i = 0; i < 2.0f / BARRIER_WIDTH; i++)
+        //{
+        Shape newBarrier = Shape(
+            {
+                // Positions          
+                0.5f,  0.5f, 0.0f,  // top right
+                0.5f, -0.5f, 0.0f,  // bottom right
+                -0.5f, -0.5f, 0.0f,  // bottom left
+                -0.5f,  0.5f, 0.0f   // top left 
+            }, {
+                0, 1, 3,   // first triangle
+                1, 2, 3    // second triangle
+            },
+            shapeShader,
+            glm::vec4(0, 255, 0, 1.0f),
+            Coordinate(0.0f, 0.2f),
+            BARRIER_WIDTH,
+            BARRIER_HEIGHT
+        );
+        //}
+
+        this->barriers.push_back(newBarrier);
     }
 
     void updateAliens(float dt)
@@ -305,11 +344,49 @@ public:
         }
     }
 
+    void checkBulletBarrierCollisions()
+    {
+        bool collided = false;
+        for (int i = 0; i < this->bullets.size(); i++)
+        {
+            if (collided) break;
+            for (int j = 0; j < this->barriers.size(); j++)
+            {
+                if (bullets[i].collidesWithShape(barriers[j]))
+                {
+                    this->barriers.erase(barriers.begin() + i);
+                    this->aliens.erase(aliens.begin() + j);
+                    score++;
+                    collided = true;
+                    break;
+                }
+            }
+        }
+
+        collided = false;
+        for (int i = 0; i < this->alienBullets.size(); i++)
+        {
+            if (collided) break;
+            for (int j = 0; j < this->barriers.size(); j++)
+            {
+                if (alienBullets[i].collidesWithShape(barriers[j]))
+                {
+                    this->alienBullets.erase(alienBullets.begin() + i);
+                    this->barriers.erase(barriers.begin() + j);
+                    score++;
+                    collided = true;
+                    break;
+                }
+            }
+        }
+    }
+
     void update(float dt)
     {
         this->checkBulletAlienCollisions();
         this->checkAlienShipCollisions();
         this->checkBulletShipCollisions();
+        this->checkBulletBarrierCollisions();
         this->updateBullets(dt);
         this->updateAliens(dt);
 

@@ -14,6 +14,7 @@
 #include "shader.h"
 #include "texture.h"
 #include "coordinate.h"
+#include "shape.h"
 
 class Sprite
 {
@@ -38,7 +39,7 @@ public:
 		
 	}
 
-	Sprite(std::vector<float> vertices, std::vector<unsigned int> indices, Shader _shader, Texture _texture, Coordinate startPos, float _width, float _height)
+	Sprite(std::vector<float> vertices, std::vector<unsigned int> indices, Shader& _shader, Texture _texture, Coordinate startPos, float _width, float _height)
 	{
 		verticesData = vertices;
 		indicesData = indices;
@@ -77,7 +78,6 @@ public:
 	void render()
 	{
 		bind();
-		float currentFrame = static_cast<float>(glfwGetTime());
 		glm::mat4 trans = glm::mat4(1.0f);
 		trans = glm::translate(trans, glm::vec3(position.x, position.y, 0.0f));
 		shader.setMat4("transform", trans);
@@ -102,6 +102,17 @@ public:
 	bool collidesWith(Sprite& other)
 	{
 		// collision x-axis?
+		bool collisionX = position.x + width >= other.position.x - other.width &&
+			other.position.x + other.width >= position.x - width;
+		// collision y-axis?
+		bool collisionY = position.y - height <= other.position.y + other.height &&
+			other.position.y - other.height <= position.y + height;
+		// collision only if on both axes
+		return collisionX && collisionY;
+	}
+
+	bool collidesWithShape(Shape& other)
+	{
 		bool collisionX = position.x + width >= other.position.x - other.width &&
 			other.position.x + other.width >= position.x - width;
 		// collision y-axis?

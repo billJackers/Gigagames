@@ -149,6 +149,8 @@
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <Text Include="shapeFragShader.txt" />
+    <Text Include="shapeVertShader.txt" />
     <Text Include="spriteFragShader.txt" />
     <Text Include="spriteVertShader.txt" />
   </ItemGroup>
@@ -157,6 +159,7 @@
     <ClInclude Include="coordinate.h" />
     <ClInclude Include="game.h" />
     <ClInclude Include="shader.h" />
+    <ClInclude Include="shape.h" />
     <ClInclude Include="sprite.h" />
     <ClInclude Include="stb_image.h" />
     <ClInclude Include="texture.h" />

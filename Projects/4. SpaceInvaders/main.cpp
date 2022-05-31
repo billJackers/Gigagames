@@ -28,7 +28,7 @@ int main()
 	GLFWwindow* window = glfwCreateWindow(700, 800, "Space Invaders", NULL, NULL);
 	if (window == NULL)
 	{
-		std::cout << "Failed to create FLW window" << std::endl;
+		std::cout << "Failed to create GLFW window" << std::endl;
 		glfwTerminate();
 		return -1;
 	}
@@ -40,6 +40,8 @@ int main()
 		std::cout << "Failed to intialize GLAD" << std::endl;
 		return -1;
 	}
+
+	Game spaceInvaders = Game();
 
 	// Background image
 	Sprite background = Sprite(
@@ -54,14 +56,12 @@ int main()
 			0, 1, 2, // 1st triangle
 			0, 2, 3, // 2nd triangle
 		},
-		Shader("spriteVertShader.txt", "spriteFragShader.txt"),
-		Texture("resources/textures/background.png", GL_RGB),
+		spaceInvaders.spriteShader,
+		Texture("resources/textures/background_2.png", GL_RGB),
 		Coordinate(0.0f, 0.0f),
 		2.0f,
 		2.0f
 	);
-
-	Game spaceInvaders = Game();
 
 	// Initialize GLAD
 	if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))

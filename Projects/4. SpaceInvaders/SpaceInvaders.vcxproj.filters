@@ -19,6 +19,12 @@
     <Filter Include="Source Files\shaders">
       <UniqueIdentifier>{a5214393-1f1d-42f0-9215-2e73298e83ee}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\shaders\shape_shaders">
+      <UniqueIdentifier>{aea4052b-6d61-4cf4-951c-dbb9da8507e8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\shaders\sprite_shaders">
+      <UniqueIdentifier>{049eacf9-b558-452a-b581-2c1545321939}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="glad.c">
@@ -29,11 +35,17 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <Text Include="shapeFragShader.txt">
+      <Filter>Source Files\shaders\shape_shaders</Filter>
+    </Text>
+    <Text Include="shapeVertShader.txt">
+      <Filter>Source Files\shaders\shape_shaders</Filter>
+    </Text>
     <Text Include="spriteVertShader.txt">
-      <Filter>Source Files\shaders</Filter>
+      <Filter>Source Files\shaders\sprite_shaders</Filter>
     </Text>
     <Text Include="spriteFragShader.txt">
-      <Filter>Source Files\shaders</Filter>
+      <Filter>Source Files\shaders\sprite_shaders</Filter>
     </Text>
   </ItemGroup>
   <ItemGroup>
@@ -56,6 +68,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="alien.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="shape.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
