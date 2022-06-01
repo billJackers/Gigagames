@@ -2,6 +2,8 @@
 #define GAME_H
 
 #include <GLFW/glfw3.h>
+#include <irrklang/irrKlang.h>
+
 #include <vector>
 
 #include "sprite.h"
@@ -55,10 +57,18 @@ private:
     float alienSpeed;
     int fleetDirection;
 
+    irrklang::ISoundEngine* backgroundMusic = irrklang::createIrrKlangDevice();
+    irrklang::ISoundEngine* soundEffects = irrklang::createIrrKlangDevice();
+
 public:
     Game()
         : score(0)
     {
+        // Start background music
+        backgroundMusic->setSoundVolume(1.0f);
+        backgroundMusic->play2D("resources/audio/temp.mp3", true);
+        soundEffects->setSoundVolume(0.2f);
+
         shapeShader = Shader("shapeVertShader.txt", "shapeFragShader.txt");
         spriteShader = Shader("spriteVertShader.txt", "spriteFragShader.txt");
 
@@ -144,6 +154,7 @@ public:
 
     void fireBullet()
     {
+        soundEffects->play2D("resources/audio/shoot.wav", false);
         Sprite newBullet = Sprite(
             {
                 // Positions          // Texture
@@ -166,6 +177,7 @@ public:
 
     void fireAlienBullet()
     {
+        soundEffects->play2D("resources/audio/shoot.wav", false);
         int alien = std::rand() % aliens.size();
         if (aliens[alien].type != SHOOTER)
             return;
