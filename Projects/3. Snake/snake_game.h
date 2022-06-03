@@ -28,9 +28,6 @@ public:
 	int score;
 
 private:
-	Randomizer* xRandomizer;
-	Randomizer* yRandomizer;
-
 	bool shouldAdd;
 
 	unsigned int VBO, VAO, EBO;
@@ -44,8 +41,6 @@ public:
 		: score(0), gameOver(false)
 	{
 		shouldAdd = false;
-		xRandomizer = new Randomizer(0, NUM_COLS);
-		yRandomizer = new Randomizer(0, NUM_ROWS);
 
 		SnakeNode* head = new SnakeNode(15, 15, nullptr, RIGHT);
 		SnakeNode* curNode = head;
@@ -56,8 +51,8 @@ public:
 			curNode = curNode->next;
 		}
 
-		applePos.x = xRandomizer->generate();
-		applePos.y = yRandomizer->generate();
+		applePos.x = std::rand() % NUM_COLS;
+		applePos.y = std::rand() % NUM_ROWS;
 
 		nodeWidth = 2.0f / NUM_COLS;
 		nodeHeight = 2.0f / NUM_ROWS;
@@ -191,8 +186,8 @@ public:
 			if (head->position.x == applePos.x && head->position.y == applePos.y)
 			{
 				score++;
-				applePos.x = xRandomizer->generate();
-				applePos.y = yRandomizer->generate();
+				applePos.x = std::rand() % NUM_COLS;
+				applePos.y = std::rand() % NUM_ROWS;
 				shouldAdd = true;
 
 				prevTail = new SnakeNode(tail->position.x, tail->position.y, nullptr, tail->direction);

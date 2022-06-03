@@ -150,7 +150,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="coordinate.h" />
-    <ClInclude Include="randomizer.h" />
     <ClInclude Include="shader.h" />
     <ClInclude Include="snake_game.h" />
     <ClInclude Include="snake_node.h" />

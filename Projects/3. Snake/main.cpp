@@ -38,10 +38,6 @@ SnakeNode* prevTail;
 
 bool shouldAdd = false;
 
-std::random_device rd;
-std::mt19937 gen(rd());
-std::uniform_int_distribution<> xDistr(0, NUM_COLS - 1);
-std::uniform_int_distribution<> yDistr(0, NUM_ROWS - 1);
 
 int appleX;
 int appleY;
@@ -51,8 +47,8 @@ int score = 0;
 
 int main()
 {
-    appleX = xDistr(gen);
-    appleY = yDistr(gen);
+    appleX = std::rand() % NUM_COLS;
+    appleY = std::rand() % NUM_ROWS;
 
     SnakeNode* curNode = head;
 
@@ -256,8 +252,8 @@ void update()
         if (head->position.x == appleX && head->position.y == appleY)
         {
             score++;
-            appleX = xDistr(gen);
-            appleY = yDistr(gen);
+            appleX = std::rand() % NUM_COLS;
+            appleY = std::rand() % NUM_ROWS;
             shouldAdd = true;
 
             prevTail = new SnakeNode(tail->position.x, tail->position.y, nullptr, tail->direction);
